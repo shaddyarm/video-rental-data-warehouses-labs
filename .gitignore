@@ -1,0 +1,9 @@
+_scratch_*/
+*.log
+*.tmp
+__pycache__/
+.env
+Лаб 1/Варианты на ЛР №2.docx
+Лаб 3/MongoDB_1.pdf
+Лаб 4/Лекция №7 Хранилища данных Neo4j.pptx
+**/Инструкция.txt

@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: video_rental
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: lab_password
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lab -d video_rental"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  mongo:
+    image: mongo:8.0
+    ports:
+      - "127.0.0.1:57017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand({ping:1})"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  neo4j:
+    image: neo4j:5-community
+    environment:
+      NEO4J_AUTH: neo4j/lab_password_neo4j
+    ports:
+      - "127.0.0.1:57474:7474"
+      - "127.0.0.1:57687:7687"
+    volumes:
+      - neo4j_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j -p lab_password_neo4j 'RETURN 1' >/dev/null"]
+      interval: 10s
+      timeout: 8s
+      retries: 30
+
+volumes:
+  pg_data:
+  mongo_data:
+  neo4j_data:
