@@ -1,4 +1,5 @@
 _scratch_*/
+_build_reports.py
 *.log
 *.tmp
 __pycache__/
